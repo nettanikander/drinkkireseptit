@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ item.title }}</title>
+</head>
+
+<body>
+  <h1>{{ item.title }}</h1>
+  <p>Ainekset:</p>
+  <ul>
+    {% for line in item.ingredients.split('\n') %}
+        {% if line.strip() %}
+            <li>{{ line }}</li>
+        {% endif %}
+    {% endfor %}
+  </ul>
+  <p>Valmistus:</p>
+  <p>
+    {{ item.recipe }}
+  </p>
+  <p>
+    Julkaisija: {{ item.username }}
+  </p>
+  <p>
+    <a href="/">Takaisin</a>
+  </p>
+</body>
+
+</html>
