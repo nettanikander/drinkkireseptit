@@ -1,7 +1,6 @@
 import sqlite3
 from flask import Flask
 from flask import abort, redirect, render_template, flash, request, session
-from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
 import items
@@ -141,11 +140,8 @@ def create():
         flash("Salasanat eivät ole samat", "error")
         return redirect("/register")
 
-    password_hash = generate_password_hash(password1)
-
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        users.create_user(username, password1)
     except sqlite3.IntegrityError:
         flash("Tunnus on jo varattu", "error")
         return redirect("/register")
@@ -167,13 +163,8 @@ def login():
         if len(username) > 15 or len(password) > 15:
             abort(403)
 
-        sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result = db.query(sql, [username])[0]
-        user_id = result["id"]
-        password_hash = result["password_hash"]
-
-
-        if check_password_hash(password_hash, password):
+        user_id = users.check_login(username, password)
+        if user_id:
             session["user_id"] = user_id
             session["username"] = username
             return redirect("/")
