@@ -20,6 +20,26 @@
       Valmistusohje: <br />
       <textarea name="recipe" rows="8" cols="40" required></textarea>
     </p>
+    <div>
+      <strong>Tyyppi</strong><br>
+      <label>
+        <input type="radio" name="alcohol" value="alkoholillinen">
+        alkoholillinen
+      </label>
+      <label>
+        <input type="radio" name="alcohol" value="alkoholiton">
+        alkoholiton
+      </label>
+    </div>
+    <p>
+      <strong>kategoria</strong><br>
+      <select name="category">
+        <option value="">valitse</option>
+        <option value="shotit">shotit</option>
+        <option value="boolit">boolit</option>
+        <option value="cocktailit">coctailit</option>
+      </select>
+    </p>
     <input type="submit" value="Lisää resepti" />
   </form>
 </body>

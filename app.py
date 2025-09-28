@@ -41,7 +41,8 @@ def show_item(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
-    return render_template("show_item.html", item=item)
+    classes = items.get_classes(item_id)
+    return render_template("show_item.html", item=item, classes=classes)
 
 @app.route("/new_item")
 def new_item():
@@ -64,7 +65,15 @@ def create_item():
         abort(403)
     user_id = session["user_id"]
 
-    items.add_item(title, ingredients, recipe, user_id)
+    classes = []
+    alcohol = request.form["alcohol"]
+    if alcohol:
+        classes.append(("tyyppi", alcohol))
+    category = request.form["category"]
+    if category:
+        classes.append(("kategoria", category))
+
+    items.add_item(title, ingredients, recipe, user_id, classes)
 
     return redirect("/")
 
