@@ -20,26 +20,17 @@
       Valmistusohje: <br />
       <textarea name="recipe" rows="8" cols="40" required></textarea>
     </p>
-    <div>
-      <strong>Tyyppi</strong><br>
-      <label>
-        <input type="radio" name="alcohol" value="alkoholillinen">
-        alkoholillinen
-      </label>
-      <label>
-        <input type="radio" name="alcohol" value="alkoholiton">
-        alkoholiton
-      </label>
-    </div>
+    {% for class in classes %}
     <p>
-      <strong>kategoria</strong><br>
-      <select name="category">
+      {{ class }}: <br>
+      <select name="classes">
         <option value="">valitse</option>
-        <option value="shotit">shotit</option>
-        <option value="boolit">boolit</option>
-        <option value="cocktailit">coctailit</option>
+      {% for option in classes[class] %}
+        <option value="{{ class }}:{{ option }}">{{ option }}</option>
+      {% endfor %}
       </select>
     </p>
+    {% endfor %}
     <input type="submit" value="Lisää resepti" />
   </form>
 </body>
