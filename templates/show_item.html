@@ -38,6 +38,24 @@
     </ul>
   </p>
   {% endif %}
+  <h2>Kommentit</h2>
+  {% for c in comments %}
+  <article>
+    <header>
+      <a href="/user/{{ c.user_id }}">{{ c.username }}</a>
+    </header>
+    <p>
+      {{ c.comment }}
+    </p>
+  </article>
+  {% endfor %}
+  <h3>Uusi kommentti</h3>
+  <form action="/create_comment" method="post">
+    Kommentti: <br>
+    <textarea name="comment" rows="5" cols="30" maxlength="500">max. 500 merkkiä</textarea><br>
+    <input type="hidden" name="item_id" value="{{ item.id }}" >
+    <input type="submit" value="Julkaise" />
+  </form>
   <p>
     <a href="/">Takaisin</a>
   </p>
