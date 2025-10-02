@@ -56,6 +56,14 @@
     <input type="hidden" name="item_id" value="{{ item.id }}" >
     <input type="submit" value="Julkaise" />
   </form>
+  {% for comment in comments %}
+    <p>{{ comment.comment }} - {{ comment.username }}</p>
+    {% if session.user_id == comment.user_id %}
+      <form action="/remove_comment/{{ comment.id }}" method="post">
+        <input type="submit" value="Poista kommentti">
+      </form>
+    {% endif %}
+  {% endfor %}
   <h3> Arvostelut</h3>
   <p>Keskiarvo: {{ average_ra or "Ei arvosteluja" }}</p>
 

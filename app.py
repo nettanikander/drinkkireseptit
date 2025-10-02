@@ -195,6 +195,23 @@ def remove_rating(item_id):
     flash("Arvostelu poistettu", "succes")
     return redirect("/item/" + str(item_id))
 
+@app.route("/remove_comment/<int:comment_id>", methods=["POST"])
+def remove_comment(comment_id):
+    require_login()
+    user_id = session["user_id"]
+
+    rem_comment = items.get_comment_by_id(comment_id)
+    if not rem_comment:
+        abort(404)
+
+    if rem_comment["user_id"] != user_id:
+        abort(403)
+
+    items.remove_comment(comment_id)
+
+    flash("Kommentti poistettu", "success")
+    return redirect("/item/" + str(rem_comment["item_id"]))
+
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
