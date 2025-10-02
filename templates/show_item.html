@@ -58,6 +58,13 @@
   </form>
   <h3> Arvostelut</h3>
   <p>Keskiarvo: {{ average_ra or "Ei arvosteluja" }}</p>
+
+  {% if user_rating %}
+    <p>Olet antanut arvosanan: {{ user_rating.score }}</p>
+    <form action="/remove_rating/{{ item.id }}" method="post">
+      <input type="submit" value="Poista arvosteluni">
+    </form>
+  {% else %}
   <form action="/rate_item/{{ item.id }}" method="post">
     <label>
       Arvostele resepti(1-5):
@@ -66,6 +73,7 @@
     </label>
     <input type="submit" value="Julkaise">
   </form>
+  {% endif %}
   <p>
     <a href="/">Takaisin</a>
   </p>

@@ -44,7 +44,11 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     comments = items.get_comments(item_id)
     average_ra = items.get_avg_rating(item_id)
-    return render_template("show_item.html", item=item, classes=classes, comments=comments, average_ra=average_ra)
+    user_rating = None
+    if "user_id" in session:
+        user_rating = items.get_user_rating(item_id, session["user_id"])
+
+    return render_template("show_item.html", item=item, classes=classes, comments=comments, average_ra=average_ra, user_rating=user_rating)
 
 @app.route("/new_item")
 def new_item():
@@ -98,7 +102,7 @@ def rate_item(item_id):
     user_id = session["user_id"]
 
     if not items.add_rating(item_id, user_id, score):
-        flash("Olet jo arvostellut tämän reseptin")
+        flash("Olet jo arvostellut tämän reseptin. Poista ensin edellinen arvostelusi")
 
     return redirect("/item/" + str(item_id))
 
@@ -171,6 +175,24 @@ def update_item():
 
     items.update_item(item_id, title, ingredients, recipe, classes)
 
+    return redirect("/item/" + str(item_id))
+
+@app.route("/remove_rating/<int:item_id>", methods=["POST"])
+def remove_rating(item_id):
+    require_login()
+
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+
+    user_id = session["user_id"]
+    rating = items.get_user_rating(item_id, user_id)
+    if not rating:
+        abort(404)
+
+    items.remove_rating_by_id(rating["id"])
+
+    flash("Arvostelu poistettu", "succes")
     return redirect("/item/" + str(item_id))
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])

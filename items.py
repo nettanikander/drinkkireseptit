@@ -49,6 +49,11 @@ def get_avg_rating(item_id):
     result = db.query(sql, [item_id])
     return round(result[0][0], 1) if result and result[0][0] else None
 
+def get_user_rating(item_id, user_id):
+    sql = "SELECT id, score FROM ratings WHERE item_id = ? AND user_id = ?"
+    result = db.query(sql, [item_id, user_id])
+    return result[0] if result else None
+
 def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
@@ -84,7 +89,17 @@ def update_item(item_id, title, ingredients, recipe, classes):
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
 
+def remove_rating_by_id(rating_id):
+    sql = "DELETE FROM ratings WHERE id = ?"
+    db.execute(sql, [rating_id])
+
 def remove_item(item_id):
+    sql = "DELETE FROM ratings WHERE item_id = ?"
+    db.execute(sql, [item_id])
+
+    sql = "DELETE FROM comments WHERE item_id = ?"
+    db.execute(sql, [item_id])
+
     sql = "DELETE FROM item_classes WHERE item_id = ?"
     db.execute(sql, [item_id])
 
