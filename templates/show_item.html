@@ -56,6 +56,16 @@
     <input type="hidden" name="item_id" value="{{ item.id }}" >
     <input type="submit" value="Julkaise" />
   </form>
+  <h3> Arvostelut</h3>
+  <p>Keskiarvo: {{ average_ra or "Ei arvosteluja" }}</p>
+  <form action="/rate_item/{{ item.id }}" method="post">
+    <label>
+      Arvostele resepti(1-5):
+      <input type="number" name="score" min="1" max="5" required>
+      <input type="hidden" name="item_id" value="{{ item.id }}" >
+    </label>
+    <input type="submit" value="Julkaise">
+  </form>
   <p>
     <a href="/">Takaisin</a>
   </p>

@@ -1,4 +1,5 @@
 import db
+import sqlite3
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -32,6 +33,21 @@ def get_comments(item_id):
              WHERE comments.item_id = ? AND comments.user_id = users.id
              ORDER BY comments.id DESC"""
     return db.query(sql, [item_id])
+
+def add_rating(item_id, user_id, score):
+    sql = """INSERT INTO ratings(item_id, user_id, score)
+             VALUES (?, ?, ?)"""
+
+    try:
+        db.execute(sql, [item_id, user_id, score])
+    except sqlite3.IntegrityError:
+        return False
+    return True
+
+def get_avg_rating(item_id):
+    sql = "SELECT AVG(score) FROM ratings WHERE item_id = ?"
+    result = db.query(sql, [item_id])
+    return round(result[0][0], 1) if result and result[0][0] else None
 
 def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"

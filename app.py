@@ -43,7 +43,8 @@ def show_item(item_id):
         abort(404)
     classes = items.get_classes(item_id)
     comments = items.get_comments(item_id)
-    return render_template("show_item.html", item=item, classes=classes, comments=comments)
+    average_ra = items.get_avg_rating(item_id)
+    return render_template("show_item.html", item=item, classes=classes, comments=comments, average_ra=average_ra)
 
 @app.route("/new_item")
 def new_item():
@@ -81,6 +82,25 @@ def create_item():
     items.add_item(title, ingredients, recipe, user_id, classes)
 
     return redirect("/")
+
+@app.route("/rate_item/<int:item_id>", methods=["POST"])
+def rate_item(item_id):
+    require_login()
+
+    score = int(request.form["score"])
+    if score < 1 or score > 5:
+        abort(403)
+
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(403)
+    user_id = session["user_id"]
+
+    if not items.add_rating(item_id, user_id, score):
+        flash("Olet jo arvostellut tämän reseptin")
+
+    return redirect("/item/" + str(item_id))
 
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
