@@ -7,6 +7,13 @@
 
 <body>
   <h1>{{ item.title }}</h1>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   {% if session.user_id == item.user_id %}
   <p>
     <a href="/edit_item/{{ item.id }}">Muokkaa</a>

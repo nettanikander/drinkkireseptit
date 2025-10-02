@@ -12,22 +12,26 @@
     <p>
       Hakusana:<input type="text" name="query" value="{{ query }}">
     </p>
-    <input type="submit" values="Lähetä">
+    <input type="submit" value="Etsi">
   </form>
 
   <p>
     <a href="/">Takaisin</a>
   </p>
 
-  {% if query %}
+{% if query %}
   <h2>Tulokset</h2>
-
-  <ul>
-    {% for item in results %}
-    <li><a href="/item/{{ item.id }}"> {{ item.title }}</a></li>
-    {% endfor %}
-  </ul>
+  {% if results %}
+    <ul>
+      {% for item in results %}
+        <li><a href="/item/{{ item.id }}"> {{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Ei hakua vastaavia reseptejä</p>
   {% endif %}
+
+{% endif %}
 </body>
 
 </html>
