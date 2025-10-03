@@ -1,38 +1,33 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Uusi resepti</title>
-</head>
+{% block title %}Uusi resepti{% endblock %}
 
-<body>
-  <h1>Uusi resepti</h1>
-  <form action="/create_item" method="post">
-    <p>
-      Nimi: <br />
-      <input type="text" name="title" maxlength="55" required/>
-    </p>
-    <p>
-      Ainekset: <br />
-      <textarea name="ingredients" rows="8" cols="40" maxlength="1000" required></textarea>
-    </p>
-    <p>
-      Valmistusohje: <br />
-      <textarea name="recipe" rows="8" cols="40" maxlength="1200">max. 1200 merkkiä</textarea>
-    </p>
-    {% for class in classes %}
-    <p>
-      {{ class }}: <br>
-      <select name="classes">
-        <option value="">valitse</option>
-      {% for option in classes[class] %}
-        <option value="{{ class }}:{{ option }}">{{ option }}</option>
-      {% endfor %}
-      </select>
-    </p>
+{% block content %}
+<h2>Uusi resepti</h2>
+<form action="/create_item" method="post">
+  <p>
+    Nimi: <br />
+    <input type="text" name="title" maxlength="55" required/>
+  </p>
+  <p>
+    Ainekset: <br />
+    <textarea name="ingredients" rows="8" cols="40" maxlength="1000" required></textarea>
+  </p>
+  <p>
+    Valmistusohje: <br />
+    <textarea name="recipe" rows="8" cols="40" maxlength="1200">max. 1200 merkkiä</textarea>
+  </p>
+  {% for class in classes %}
+  <p>
+    {{ class }}: <br>
+    <select name="classes">
+      <option value="">valitse</option>
+    {% for option in classes[class] %}
+      <option value="{{ class }}:{{ option }}">{{ option }}</option>
     {% endfor %}
-    <input type="submit" value="Lisää resepti" />
-  </form>
-</body>
-
-</html>
+    </select>
+  </p>
+  {% endfor %}
+  <input type="submit" value="Lisää resepti" />
+</form>
+{% endblock %}

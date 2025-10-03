@@ -1,24 +1,16 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Julkaisija{{ user.username }}</title>
-</head>
+{% block title %}{{ user.username }}{% endblock %}
 
-<body>
-  <h1>Julkaisija {{ user.username }}</h1>
-  <p>
-    Julkaistuja reseptejä: {{ items | count }}
-  </p>
-  <h2>Reseptit</h2>
-  <ul>
-    {% for item in items %}
-    <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
-    {% endfor %}
-  </ul>
-  <p>
-    <a href="/">Takaisin</a>
-  </p>
-</body>
-
-</html>
+{% block content %}
+<h2>Julkaisija {{ user.username }}</h2>
+<p>
+  Julkaistuja reseptejä: {{ items | count }}
+</p>
+<h3>Reseptit</h3>
+<ul>
+  {% for item in items %}
+  <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

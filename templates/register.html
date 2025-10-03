@@ -1,36 +1,31 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Rekisteröinti</title>
-</head>
+{% block title %}Luo tunnus{% endblock %}
 
-<body>
-  <h1>Luo tunnus</h1>
+{% block content %}
+<h2>Luo tunnus</h2>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
-  <form action="/create" method="post">
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" maxlength="15" required />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password1" maxlength="15" required />
-    </p>
-    <p>
-      Salasana uudestaan: <br />
-      <input type="password" name="password2"  maxlength="15" required />
-    </p>
-    <input type="submit" value="Luo tunnus" />
-  </form>
-</body>
-
-</html>
+<form action="/create" method="post">
+  <p>
+    Tunnus: <br />
+    <input type="text" name="username" maxlength="15" required />
+  </p>
+  <p>
+    Salasana: <br />
+    <input type="password" name="password1" maxlength="15" required />
+  </p>
+  <p>
+    Salasana uudestaan: <br />
+    <input type="password" name="password2"  maxlength="15" required />
+  </p>
+  <input type="submit" value="Luo tunnus" />
+</form>
+{% endblock %}

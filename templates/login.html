@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Kirjautuminen</title>
-</head>
+{% block title %}Kirjaudu sisään{% endblock %}
 
-<body>
-  {% if session.username %}
-  <p>
-    Olet kirjautunut nimellä {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Kirjaudu ulos</a>
-  </p>
-  {% else %}
+{% block content %}
+
+<h2>Kirjaudu sisään</h2>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -23,18 +14,15 @@
     {% endif %}
   {% endwith %}
 
-  <form action="/login" method="post">
-    <p>
-      Tunnus: <br />
-      <input type="text" name="username" maxlength="15" required />
-    </p>
-    <p>
-      Salasana: <br />
-      <input type="password" name="password" maxlength="15" required/>
-    </p>
-    <input type="submit" value="Kirjaudu" />
-  </form>
-  {% endif %}
-</body>
-
-</html>
+<form action="/login" method="post">
+  <p>
+    Tunnus: <br />
+    <input type="text" name="username" maxlength="15" required />
+  </p>
+  <p>
+    Salasana: <br />
+    <input type="password" name="password" maxlength="15" required/>
+  </p>
+  <input type="submit" value="Kirjaudu" />
+</form>
+{% endblock %}

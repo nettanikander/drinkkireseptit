@@ -1,26 +1,19 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Etsi resepti</title>
-</head>
+{% block title %}Etsi resepti{% endblock %}
 
-<body>
-  <h1>Etsi resepti</h1>
+{% block content %}
+<h2>Etsi resepti</h2>
 
-  <form action="/find_item" method="get">
-    <p>
-      Hakusana:<input type="text" name="query" value="{{ query }}">
-    </p>
-    <input type="submit" value="Etsi">
-  </form>
-
+<form action="/find_item" method="get">
   <p>
-    <a href="/">Takaisin</a>
+    Hakusana:<input type="text" name="query" value="{{ query }}">
   </p>
+  <input type="submit" value="Etsi">
+</form>
 
 {% if query %}
-  <h2>Tulokset</h2>
+<h2>Tulokset</h2>
   {% if results %}
     <ul>
       {% for item in results %}
@@ -32,6 +25,4 @@
   {% endif %}
 
 {% endif %}
-</body>
-
-</html>
+{% endblock %}
