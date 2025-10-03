@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, flash, request, session
+from flask import abort, make_response, redirect, render_template, flash, request, session
 import config
 import db
 import items
@@ -44,11 +44,23 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     comments = items.get_comments(item_id)
     average_ra = items.get_avg_rating(item_id)
+    images = items.get_images(item_id)
     user_rating = None
     if "user_id" in session:
         user_rating = items.get_user_rating(item_id, session["user_id"])
 
-    return render_template("show_item.html", item=item, classes=classes, comments=comments, average_ra=average_ra, user_rating=user_rating)
+    return render_template("show_item.html", item=item, classes=classes, comments=comments, average_ra=average_ra, 
+    user_rating=user_rating, images=images)
+
+@app.route("/image/<int:image_id>")
+def show_image(image_id):
+    image = items.get_image(image_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response
 
 @app.route("/new_item")
 def new_item():
@@ -176,6 +188,44 @@ def update_item():
     items.update_item(item_id, title, ingredients, recipe, classes)
 
     return redirect("/item/" + str(item_id))
+
+@app.route("/images/<int:item_id>")
+def edit_images(item_id):
+    require_login()
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
+    images = items.get_images(item_id)
+
+    return render_template("images.html", item=item, images=images)
+
+@app.route("/add_image", methods=["POST"])
+def add_image():
+    require_login()
+
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item["user_id"] != session["user_id"]:
+        abort(403)
+
+    file = request.files["image"]
+    if not file.filename.endswith(".jpg"):
+        flash("Väärä tiedostomuoto", "error")
+        return redirect("/add_image/" + str(item_id))
+
+    image = file.read()
+    if len(image) > 100 * 1024:
+        flash("Liian suuri kuva", "error")
+        return redirect("/add_image/" + str(item_id))
+
+
+    items.add_image(item_id, image)
+    return redirect("/user/" + str(item_id))
 
 @app.route("/remove_rating/<int:item_id>", methods=["POST"])
 def remove_rating(item_id):
