@@ -2,11 +2,63 @@ body {
   margin: auto;
   max-width: 50em;
   font-family: 'Times New Roman', Times, serif;
-  background-color: rgb(169, 154, 221);
+  background-color: rgb(0, 0, 0);
+}
+
+.header {
+  background-color: rgb(111, 103, 86);
+  color: rgb(0, 0, 0);
+  padding: 1em;
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+.nav_bar {
+  background-color: rgb(152, 149, 149);
+  padding: 0.5em;
+  margin: 0.5em 0;
+}
+
+.nav_bar ul {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav_bar li {
+  display: inline-block;
+  padding: 0 1em;
+  margin: 0;
+}
+.nav_bar a {
+  text-decoration: none;
+  color: rgb(223, 42, 255);
+  font-weight: bold;
+}
+
+.nav_bar a:hover {
+  color: rgb(0, 0, 0);
+}
+
+.logged_in {
+  background-color: rgb(223, 42, 255);
+  color: rgb(0, 0, 0);
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  margin: 0.5em 0;
+}
+
+.content {
+  background-color: rgb(111, 103, 86);
+  padding: 1em;
+  margin: 0.5em 0;
 }
 
 .item {
-  border: 2px solid black;
+  border: 2px solid rgb(238, 184, 205);
+  background-color: bisque;
   margin: 1em;
   padding: 0.2em 0.5em;
 }
