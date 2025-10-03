@@ -102,7 +102,8 @@ def create_item():
 
     items.add_item(title, ingredients, recipe, user_id, classes)
 
-    return redirect("/")
+    item_id = db.last_insert_id()
+    return redirect("/item/" + str(item_id))
 
 @app.route("/rate_item/<int:item_id>", methods=["POST"])
 def rate_item(item_id):
