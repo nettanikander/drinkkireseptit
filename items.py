@@ -126,6 +126,9 @@ def remove_comment(comment_id):
     db.execute(sql, [comment_id])
 
 def remove_item(item_id):
+    sql = "DELETE FROM images WHERE item_id = ?"
+    db.execute(sql, [item_id])
+
     sql = "DELETE FROM ratings WHERE item_id = ?"
     db.execute(sql, [item_id])
 
