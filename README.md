@@ -5,11 +5,10 @@
 * Käyttäjä pystyy lisäämään reseptejä ja muokkaamaan ja poistamaan niitä.
 * Käyttäjä näkee sovellukseen lisätyt reseptit.
 * Käyttäjä pystyy etsimään reseptejä hakusanalla.
-
-  Tulossa:
 * Käyttäjäsivu näyttää, montako reseptiä käyttäjä on lisännyt ja listan käyttäjän lisäämistä resepteistä.
 * Käyttäjä pystyy valitsemaan reseptille yhden tai useamman luokittelun (esim. alkoholiton, klassikko, shotit, boolit, cocktailit).
 * Käyttäjä pystyy antamaan reseptille kommentin ja arvosanan. Reseptistä näytetään kommentit ja keskimääräinen arvosana.
+* Käyttäjä pystyy lisäämään reseptiin kuvia ja poistamaan ne.
 
 ## Sovelluksen asennus
 
