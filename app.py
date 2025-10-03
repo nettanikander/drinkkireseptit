@@ -15,7 +15,12 @@ def require_login():
 
 @app.route("/")
 def index():
-    all_items = items.get_items()
+    all_items = []
+    for row in items.get_items():
+        item = dict(row)
+        item["avg_score"] = items.get_avg_rating(item["id"])
+        all_items.append(item)
+
     return render_template("index.html", items=all_items)
 
 @app.route("/user/<int:user_id>")
