@@ -231,7 +231,7 @@ def add_image():
 
 
     items.add_image(item_id, image)
-    return redirect("/user/" + str(item_id))
+    return redirect("/item/" + str(item_id))
 
 @app.route("/remove_images", methods=["POST"])
 def remove_images():
