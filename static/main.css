@@ -62,3 +62,76 @@ body {
   margin: 1em;
   padding: 0.2em 0.5em;
 }
+
+.title {
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 0.5em;
+}
+
+.ingredients {
+  background-color: rgb(126, 118, 98);
+  color: #000000;
+  padding: 0.5em;
+  border-radius: 12px;
+  margin: 1em 0;
+  line-height: 1.5;
+}
+
+.ingredients li {
+  margin: 1.5em;
+}
+
+.recipe {
+  background-color: rgb(126, 118, 98);
+  color: #000000;
+  padding: 0.5em;
+  border-radius: 5px;
+  margin: 1em 0;
+}
+
+.comment {
+  background-color: rgb(90, 85, 75);
+  color: #fff;
+  padding: 1em;
+  border-radius: 10px;
+  margin: 1em 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.comment_header {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.commen_header a {
+  color: rgb(223, 42, 255);
+  text-decoration: none;
+}
+
+.comment_body {
+  margin: 0.5em 0 1em 0;
+  line-height: 1.5;
+}
+
+.comment_form {
+  text-align: right;
+}
+
+.button {
+  background-color: rgb(223, 42, 255);
+  color: #000;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.text_area {
+  padding: 0.5em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  resize: none;
+  margin-bottom: 0.8em;
+}

@@ -5,6 +5,7 @@
 {% block content %}
 
 <h2>{{ item.title }}</h2>
+<p>Arvosana: {{ average_ra or "Ei arvosteluja" }}</p>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -13,6 +14,10 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+<p>
+  Julkaisija: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
+</p>
+
 {% if session.user_id == item.user_id %}
 <p>
   <a href="/edit_item/{{ item.id }}">Muokkaa</a>
@@ -20,23 +25,23 @@
   <a href="/images/{{ item.id }}">Kuvat</a>
 </p>
 {% endif %}
-{% for image in images %}
-<img src="/image/{{ image.id }}" />
-{% endfor %}
-<p>Ainekset:</p>
-<ul>
+<div>
+  {% for image in images %}
+    <img src="/image/{{ image.id }}" />
+  {% endfor %}
+</div>
+
+<p class="title">Ainekset</p>
+<ul class="ingredients">
   {% for line in item.ingredients.split('\n') %}
     {% if line.strip() %}
         <li>{{ line }}</li>
     {% endif %}
   {% endfor %}
 </ul>
-<p>Valmistus:</p>
-<p>
+<p class="title">Valmistus:</p>
+<p class="recipe">
   {{ item.recipe }}
-</p>
-<p>
-  Julkaisija: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
 </p>
 {% if classes %}
 <p>
@@ -48,12 +53,10 @@
   </ul>
 </p>
 {% endif %}
-<h3> Arvostelut</h3>
-<p>Keskiarvo: {{ average_ra or "Ei arvosteluja" }}</p>
 {% if user_rating %}
   <p>Olet antanut arvosanan: {{ user_rating.score }}</p>
   <form action="/remove_rating/{{ item.id }}" method="post">
-    <input type="submit" value="Poista arvosteluni">
+    <input type="submit" value="Poista arvosteluni" class="button">
   </form>
 {% else %}
 <form action="/rate_item/{{ item.id }}" method="post">
@@ -61,22 +64,22 @@
     Arvostele resepti(1-5):
     <input type="number" name="score" min="1" max="5" required>
     <input type="hidden" name="item_id" value="{{ item.id }}" >
-  </label>
-  <input type="submit" value="Julkaise">
+  </label> <br>
+  <input type="submit" value="Julkaise" class="button">
 </form>
 {% endif %}
 <h3>Kommentit</h3>
 {% for c in comments %}
-<article>
-  <header>
+<article class="comment">
+  <header class="comment_header">
     <a href="/user/{{ c.user_id }}">{{ c.username }}</a>
   </header>
-  <p>
+  <p class="comment_body">
     {{ c.comment }}
   </p>
   {% if session.user_id == c.user_id %}
-    <form action="/remove_comment/{{ c.id }}" method="post">
-      <input type="submit" value="Poista kommentti">
+    <form action="/remove_comment/{{ c.id }}" method="post" class="comment_form">
+      <input type="submit" value="Poista kommentti" class="button">
     </form>
   {% endif %}
 </article>
@@ -84,10 +87,8 @@
 <h4>Uusi kommentti</h4>
 <form action="/create_comment" method="post">
   Kommentti: <br>
-  <textarea name="comment" rows="5" cols="30" maxlength="500">max. 500 merkkiä</textarea><br>
+  <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area">max. 500 merkkiä</textarea><br>
   <input type="hidden" name="item_id" value="{{ item.id }}" >
-  <input type="submit" value="Julkaise" />
+  <input type="submit" value="Julkaise" class="button" />
 </form>
-
-
 {% endblock %}
