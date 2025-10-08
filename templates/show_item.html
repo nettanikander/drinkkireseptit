@@ -87,7 +87,7 @@
 <h4>Uusi kommentti</h4>
 <form action="/create_comment" method="post">
   Kommentti: <br>
-  <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area">max. 500 merkkiä</textarea><br>
+  <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area" placeholder="max. 500 merkkiä"></textarea><br>
   <input type="hidden" name="item_id" value="{{ item.id }}" >
   <input type="submit" value="Julkaise" class="button" />
 </form>
