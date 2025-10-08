@@ -1,3 +1,4 @@
+import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, flash, request, session
@@ -12,6 +13,12 @@ app.secret_key = config.secret_key
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 @app.route("/")
@@ -77,6 +84,7 @@ def new_item():
 @app.route("/create_item", methods=["POST"])
 def create_item():
     require_login()
+    check_csrf()
 
     title = request.form["title"]
     if not title or len(title) > 50:
@@ -115,6 +123,7 @@ def show_lines(content):
 @app.route("/rate_item/<int:item_id>", methods=["POST"])
 def rate_item(item_id):
     require_login()
+    check_csrf()
 
     score = int(request.form["score"])
     if score < 1 or score > 5:
@@ -134,6 +143,7 @@ def rate_item(item_id):
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
     require_login()
+    check_csrf()
 
     comment = request.form["comment"]
     if not comment or len(comment) > 500:
@@ -169,6 +179,8 @@ def edit_item(item_id):
 @app.route("/update_item", methods=["POST"])
 def update_item():
     require_login()
+    check_csrf()
+
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
     if not item:
@@ -218,6 +230,7 @@ def edit_images(item_id):
 @app.route("/add_image", methods=["POST"])
 def add_image():
     require_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -243,6 +256,7 @@ def add_image():
 @app.route("/remove_images", methods=["POST"])
 def remove_images():
     require_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -259,6 +273,7 @@ def remove_images():
 @app.route("/remove_rating/<int:item_id>", methods=["POST"])
 def remove_rating(item_id):
     require_login()
+    check_csrf()
 
     item = items.get_item(item_id)
     if not item:
@@ -277,6 +292,8 @@ def remove_rating(item_id):
 @app.route("/remove_comment/<int:comment_id>", methods=["POST"])
 def remove_comment(comment_id):
     require_login()
+    check_csrf()
+
     user_id = session["user_id"]
 
     rem_comment = items.get_comment_by_id(comment_id)
@@ -294,6 +311,7 @@ def remove_comment(comment_id):
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     require_login()
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -304,6 +322,7 @@ def remove_item(item_id):
         return render_template("remove_item.html", item=item)
 
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
@@ -316,6 +335,8 @@ def register():
 
 @app.route("/create", methods=["POST"])
 def create():
+    check_csrf()
+
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
@@ -356,6 +377,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("Väärä tunnus tai salasana", "error")

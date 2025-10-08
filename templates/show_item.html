@@ -56,6 +56,7 @@
 {% if user_rating %}
   <p>Olet antanut arvosanan: {{ user_rating.score }}</p>
   <form action="/remove_rating/{{ item.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Poista arvosteluni" class="button">
   </form>
 {% else %}
@@ -64,6 +65,7 @@
     Arvostele resepti(1-5):
     <input type="number" name="score" min="1" max="5" required>
     <input type="hidden" name="item_id" value="{{ item.id }}" >
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   </label> <br>
   <input type="submit" value="Julkaise" class="button">
 </form>
@@ -79,6 +81,7 @@
   </p>
   {% if session.user_id == c.user_id %}
     <form action="/remove_comment/{{ c.id }}" method="post" class="comment_form">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
       <input type="submit" value="Poista kommentti" class="button">
     </form>
   {% endif %}
@@ -89,6 +92,7 @@
   Kommentti: <br>
   <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area" placeholder="max. 500 merkkiä"></textarea><br>
   <input type="hidden" name="item_id" value="{{ item.id }}" >
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Julkaise" class="button" />
 </form>
 {% endblock %}
