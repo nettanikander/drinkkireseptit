@@ -5,6 +5,7 @@ import config
 import db
 import items
 import users
+import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -104,6 +105,12 @@ def create_item():
 
     item_id = db.last_insert_id()
     return redirect("/item/" + str(item_id))
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 @app.route("/rate_item/<int:item_id>", methods=["POST"])
 def rate_item(item_id):

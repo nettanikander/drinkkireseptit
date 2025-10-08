@@ -41,7 +41,7 @@
 </ul>
 <p class="title">Valmistus:</p>
 <p class="recipe">
-  {{ item.recipe }}
+  {{ item.recipe | show_lines }}
 </p>
 {% if classes %}
 <p>
@@ -75,7 +75,7 @@
     <a href="/user/{{ c.user_id }}">{{ c.username }}</a>
   </header>
   <p class="comment_body">
-    {{ c.comment }}
+    {{ c.comment | show_lines }}
   </p>
   {% if session.user_id == c.user_id %}
     <form action="/remove_comment/{{ c.id }}" method="post" class="comment_form">
