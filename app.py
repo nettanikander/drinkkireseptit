@@ -320,7 +320,7 @@ def create():
 
     if password1 != password2:
         flash("Salasanat eivät ole samat", "error")
-        return redirect("/register")
+        return render_template("register.html", username=username)
 
     try:
         users.create_user(username, password1)

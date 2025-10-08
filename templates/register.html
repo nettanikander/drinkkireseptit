@@ -16,7 +16,7 @@
 <form action="/create" method="post">
   <p>
     Tunnus: <br />
-    <input type="text" name="username" maxlength="15" required />
+    <input type="text" name="username" value= "{{ username|default('') }}" maxlength="15" required />
   </p>
   <p>
     Salasana: <br />
