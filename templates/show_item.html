@@ -67,7 +67,9 @@
     <input type="hidden" name="item_id" value="{{ item.id }}" >
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   </label> <br>
+  {% if session.user_id %}
   <input type="submit" value="Julkaise" class="button">
+  {% endif %}
 </form>
 {% endif %}
 <h3>Kommentit</h3>
@@ -88,6 +90,7 @@
 </article>
 {% endfor %}
 <h4>Uusi kommentti</h4>
+{% if session.user_id %}
 <form action="/create_comment" method="post">
   Kommentti: <br>
   <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area" placeholder="max. 500 merkkiä"></textarea><br>
@@ -95,4 +98,5 @@
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Julkaise" class="button" />
 </form>
+{% endif %}
 {% endblock %}
