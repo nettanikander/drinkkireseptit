@@ -239,6 +239,11 @@ def add_image():
     if item["user_id"] != session["user_id"]:
         abort(403)
 
+    all_images = items.get_images(item_id)
+    if len(all_images) >= 3:
+        flash("Tämä kohde voi sisältää max 3 kuvaa", "error")
+        return redirect("/images/" + str(item_id))
+
     file = request.files["image"]
     if not file.filename.endswith(".jpg"):
         flash("Väärä tiedostomuoto", "error")
