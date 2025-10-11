@@ -23,7 +23,7 @@
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <p>
-    <input type="submit" value="Poista valitut" />
+    <input type="submit" value="Poista valitut" class="button"/>
   </p>
 </form>
 
@@ -34,6 +34,6 @@
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-  <input type="submit" value="Lähetä" />
+  <input type="submit" value="Lähetä" class="button"/>
 </form>
 {% endblock %}
