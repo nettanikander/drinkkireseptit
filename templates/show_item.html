@@ -69,6 +69,10 @@
   </label> <br>
   {% if session.user_id %}
   <input type="submit" value="Julkaise" class="button">
+  {% else %}
+  <p>
+    Jos haluat antaa arvostelun tai kommentoida, <a href="/login"> kirjaudu sisään</a>
+  </p>
   {% endif %}
 </form>
 {% endif %}
@@ -88,9 +92,11 @@
     </form>
   {% endif %}
 </article>
+{% else %}
+<p>Ole ensimmäinen kommentoija!</p>
 {% endfor %}
-<h4>Uusi kommentti</h4>
 {% if session.user_id %}
+<h4>Uusi kommentti</h4>
 <form action="/create_comment" method="post">
   Kommentti: <br>
   <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area" placeholder="max. 500 merkkiä"></textarea><br>
