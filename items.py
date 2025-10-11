@@ -142,9 +142,10 @@ def remove_item(item_id):
     db.execute(sql, [item_id])
 
 def find_items(query):
-    sql = """SELECT id, title
+    sql = """SELECT items.id, items.title
              FROM items
-             WHERE title LIKE ? OR ingredients LIKE ?
-             ORDER BY id DESC"""
+             LEFT JOIN item_classes ON items.id = item_classes.item_id
+             WHERE items.title LIKE ? OR ingredients LIKE ? OR item_classes.value LIKE ?
+             ORDER BY items.id DESC"""
     like = "%" + query + "%"
-    return db.query(sql, [like, like])
+    return db.query(sql, [like, like, like])
