@@ -340,8 +340,6 @@ def register():
 
 @app.route("/create", methods=["POST"])
 def create():
-    check_csrf()
-
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
@@ -366,8 +364,12 @@ def create():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     if request.method == "GET":
-        return render_template("login.html", next_page=request.referrer)
+        ref = request.referrer
+        if not ref or "/register" in ref:
+            ref = "/"
+        return render_template("login.html", next_page=ref)
 
     if request.method == "POST":
         username = request.form["username"]
