@@ -142,7 +142,7 @@ def remove_item(item_id):
     db.execute(sql, [item_id])
 
 def find_items(query):
-    sql = """SELECT items.id, items.title
+    sql = """SELECT DISTINCT items.id, items.title
              FROM items
              LEFT JOIN item_classes ON items.id = item_classes.item_id
              WHERE items.title LIKE ? OR ingredients LIKE ? OR item_classes.value LIKE ?
