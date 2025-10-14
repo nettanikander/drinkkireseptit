@@ -18,16 +18,17 @@
     {% for image in images %}
       <img src="/image/{{ image.id }}" alt="Reseptin kuva" />
       <label>
-        <input type="checkbox" name = "image_id" value="{{ image.id }}">
-        Valitse tämä kuva       
+        <input type="checkbox" name = "image_id" value="{{ image.id }}">      
       </label>
     {% endfor %}
   </div>
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  {% if images %}
   <p>
     <input type="submit" value="Poista valitut" class="button"/>
   </p>
+  {% endif %}
 </form>
 
 <h3>Lisää uusi kuva</h3>
