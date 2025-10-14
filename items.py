@@ -21,6 +21,8 @@ def add_item(title, ingredients, recipe, user_id, classes):
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ? ,?)"
     for title, value in classes:
         db.execute(sql, [item_id, title, value])
+    
+    return item_id
 
 def get_images(item_id):
     sql = "SELECT id FROM images WHERE item_id = ?"
