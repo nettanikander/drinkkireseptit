@@ -17,13 +17,13 @@
     <label for="recipe">Valmistusohje:</label> <br />
     <textarea name="recipe" id ="recipe" rows="8" cols="40" maxlength="1200" placeholder="max. 1200 merkkiä"></textarea>
   </p>
-  {% for class in classes %}
+  {% for class_title, options in all_classes.items() %}
   <p>
-    <label for="class{{ class }}">{{ class }}:</label> <br />
-    <select name="classes" id="class{{ class }}" >
+    <label for="{{ class_title }}">{{ class_title }}:</label> <br />
+    <select name="classes" id="{{ class_title }}" >
       <option value="">valitse</option>
-    {% for option in classes[class] %}
-      <option value="{{ class }}:{{ option }}">{{ option }}</option>
+    {% for option in options %}
+      <option value="{{ class_title }}:{{ option }}">{{ option }}</option>
     {% endfor %}
     </select>
   </p>
