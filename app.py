@@ -271,6 +271,7 @@ def remove_images():
     for image_id in request.form.getlist("image_id"):
         items.remove_image(item_id, image_id)
 
+    flash("Kuva poistettu", "success")
     return redirect("/item/" + str(item_id))
 
 @app.route("/remove_rating/<int:item_id>", methods=["POST"])
@@ -289,7 +290,7 @@ def remove_rating(item_id):
 
     items.remove_rating_by_id(rating["id"])
 
-    flash("Arvostelu poistettu", "succes")
+    flash("Arvostelu poistettu", "success")
     return redirect("/item/" + str(item_id))
 
 @app.route("/remove_comment/<int:comment_id>", methods=["POST"])

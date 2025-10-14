@@ -54,13 +54,13 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5em;
+  gap: 0.4em;
   margin: 1.5em 0;
 }
 
 .images_container img {
-  width: 250px;
-  height: 200px;
+  width: 220px;
+  height: 180px;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -149,4 +149,24 @@ body {
   font-size: 1em;
   resize: none;
   margin-bottom: 0.8em;
+}
+
+.flash {
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  margin: 1em 0;
+}
+
+.flash.success {
+  background-color: rgb(126, 255, 180);
+  color: rgb(0, 60, 0);
+  border: 2px solid rgb(0, 90, 0);
+}
+
+.flash.error {
+  background-color: rgb(255, 130, 130);
+  color: rgb(60, 0, 0);
+  border: 2px solid rgb(100, 0, 0);
 }
