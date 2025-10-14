@@ -16,7 +16,7 @@
 <form action="/remove_images" method="post">
   <div class="images_container">
     {% for image in images %}
-      <img src="/image/{{ image.id }}" />
+      <img src="/image/{{ image.id }}" alt="Ilmoituksen kuva" />
       <input type="checkbox" name = "image_id" value="{{ image.id }}">
     {% endfor %}
   </div>
