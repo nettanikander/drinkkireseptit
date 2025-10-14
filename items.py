@@ -1,5 +1,5 @@
-import db
 import sqlite3
+import db
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -19,9 +19,9 @@ def add_item(title, ingredients, recipe, user_id, classes):
     item_id = db.last_insert_id()
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ? ,?)"
-    for title, value in classes:
-        db.execute(sql, [item_id, title, value])
-    
+    for class_title, value in classes:
+        db.execute(sql, [item_id, class_title, value])
+
     return item_id
 
 def get_images(item_id):
@@ -116,8 +116,8 @@ def update_item(item_id, title, ingredients, recipe, classes):
     db.execute(sql, [item_id])
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ? ,?)"
-    for title, value in classes:
-        db.execute(sql, [item_id, title, value])
+    for class_title, value in classes:
+        db.execute(sql, [item_id, class_title, value])
 
 def remove_rating_by_id(rating_id):
     sql = "DELETE FROM ratings WHERE id = ?"

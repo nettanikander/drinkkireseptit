@@ -2,14 +2,13 @@ import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, flash, request, session
+import markupsafe
 import config
-import db
 import items
 import users
-import markupsafe
 
 app = Flask(__name__)
-app.secret_key = config.secret_key
+app.secret_key = config.SECRET_KEY
 
 def require_login():
     if "user_id" not in session:
@@ -36,8 +35,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    items = users.get_items(user_id)
-    return render_template("show_user.html", user=user, items=items)
+    user_items = users.get_items(user_id)
+    return render_template("show_user.html", user=user, user_items=user_items)
 
 @app.route("/find_item")
 def find_item():
@@ -62,8 +61,8 @@ def show_item(item_id):
     if "user_id" in session:
         user_rating = items.get_user_rating(item_id, session["user_id"])
 
-    return render_template("show_item.html", item=item, classes=classes, comments=comments, average_ra=average_ra, 
-    user_rating=user_rating, images=images)
+    return render_template("show_item.html", item=item, classes=classes, comments=comments,
+                            average_ra=average_ra, user_rating=user_rating, images=images)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
@@ -200,7 +199,7 @@ def update_item():
 
     classes = []
     for entry in request.form.getlist("classes"):
-       if entry:
+        if entry:
             class_title, class_value = entry.split(":")
             if class_title not in all_classes:
                 abort(403)
@@ -330,8 +329,7 @@ def remove_item(item_id):
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
-        else:
-            return redirect("/item/" + str(item_id))
+        return redirect("/item/" + str(item_id))
 
 @app.route("/register")
 def register():
@@ -386,9 +384,9 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect(next_page)
-        else:
-            flash("Väärä tunnus tai salasana", "error")
-            return render_template("login.html", next_page=next_page)
+
+        flash("Väärä tunnus tai salasana", "error")
+        return render_template("login.html", next_page=next_page)
 
 @app.route("/logout")
 def logout():
