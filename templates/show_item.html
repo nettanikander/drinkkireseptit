@@ -10,7 +10,7 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
-      <p class="{{ category }}">{{ message }}</p>
+      <p class="{{ category }}" role="alert">{{ message }}</p>
     {% endfor %}
   {% endif %}
 {% endwith %}
@@ -27,7 +27,7 @@
 {% endif %}
 <div class="images_container">
   {% for image in images %}
-    <img src="/image/{{ image.id }}" alt="Ilmoituksen kuva"/>
+    <img src="/image/{{ image.id }}" alt="Reseptin kuva"/>
   {% endfor %}
 </div>
 
@@ -44,14 +44,12 @@
   {{ item.recipe | show_lines }}
 </p>
 {% if classes %}
-<p>
-  Kategoriat:
-  <ul>
-    {% for class in classes %}
-    <li>{{ class.title }}: {{ class.value }}</li>
-    {% endfor %}
-  </ul>
-</p>
+Kategoriat:
+<ul>
+  {% for class in classes %}
+  <li>{{ class.title }}: {{ class.value }}</li>
+  {% endfor %}
+</ul>
 {% endif %}
 {% if user_rating %}
   <p>Olet antanut arvosanan: {{ user_rating.score }}</p>
@@ -61,17 +59,16 @@
   </form>
 {% else %}
 <form action="/rate_item/{{ item.id }}" method="post">
-  <label>
-    Arvostele resepti(1-5):
-    <input type="number" name="score" min="1" max="5" required>
-    <input type="hidden" name="item_id" value="{{ item.id }}" >
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-  </label> <br>
+  <label>Arvostele resepti(1-5):</label>
+  <input type="number" name="score" id="score" min="1" max="5" required>
+  <input type="hidden" name="item_id" value="{{ item.id }}" >
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <br>
   {% if session.user_id %}
   <input type="submit" value="Julkaise" class="button">
   {% else %}
   <p>
-    Jos haluat antaa arvostelun tai kommentoida, <a href="/login"> kirjaudu sisään</a>
+    Jos haluat antaa arvostelun tai kommentoida, <a href="/login">kirjaudu sisään</a>
   </p>
   {% endif %}
 </form>
@@ -98,8 +95,8 @@
 {% if session.user_id %}
 <h4>Uusi kommentti</h4>
 <form action="/create_comment" method="post">
-  Kommentti: <br>
-  <textarea name="comment" rows="5" cols="30" maxlength="500" class="text_area" placeholder="max. 500 merkkiä"></textarea><br>
+  <label for="comment">Kommentti:</label> <br>
+  <textarea name="comment" id="comment" rows="5" cols="30" maxlength="500" class="text_area" placeholder="max. 500 merkkiä"></textarea><br>
   <input type="hidden" name="item_id" value="{{ item.id }}" >
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Julkaise" class="button" />

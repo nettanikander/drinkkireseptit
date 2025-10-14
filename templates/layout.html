@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
 
 <head>
+  <meta charset="UTF-8">
   <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="/static/main.css">
 </head>
@@ -17,7 +18,7 @@
   </p>
   {% endif %}
 
-  <nav class="nav_bar">
+  <nav class="nav_bar" aria-label="päävalikko">
     <ul>
       <li><a href="/">Etusivu</a></li> |
       <li><a href="/find_item">Etsi resepti</a></li> |

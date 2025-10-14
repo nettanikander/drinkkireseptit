@@ -8,7 +8,7 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
-      <p class="{{ category }}">{{ message }}</p>
+      <p class="{{ category }}" role="alert">{{ message }}</p>
     {% endfor %}
   {% endif %}
 {% endwith %}
@@ -16,8 +16,11 @@
 <form action="/remove_images" method="post">
   <div class="images_container">
     {% for image in images %}
-      <img src="/image/{{ image.id }}" alt="Ilmoituksen kuva" />
-      <input type="checkbox" name = "image_id" value="{{ image.id }}">
+      <img src="/image/{{ image.id }}" alt="Reseptin kuva" />
+      <label>
+        <input type="checkbox" name = "image_id" value="{{ image.id }}">
+        Valitse tämä kuva       
+      </label>
     {% endfor %}
   </div>
   <input type="hidden" name="item_id" value="{{ item.id }}">
@@ -30,7 +33,8 @@
 <h3>Lisää uusi kuva</h3>
 <form action="/add_image" method="post" enctype="multipart/form-data">
   <p>
-    Kuva: <input type="file" name="image" accept=".jpg" />
+    <label for="image">Kuva:</label>
+    <input type="file" name="image" id="image" accept=".jpg" />
   </p>
   <input type="hidden" name="item_id" value="{{ item.id }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
